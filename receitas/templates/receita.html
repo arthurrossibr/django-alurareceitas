@@ -7,28 +7,10 @@
         <img src="{% static 'img/core-img/hamburger.png' %}" alt="">
     </div>
 
-    <!-- Search Wrapper -->
-    <div class="search-wrapper">
-        <!-- Close Btn -->
-        <div class="close-btn"><i class="fa fa-times" aria-hidden="true"></i></div>
+    {% include 'partials/_busca.html' %}
+    {% include 'partials/_menu.html' %}
 
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <form action="#" method="post">
-                        <label>
-                            <input type="search" name="search" placeholder="O que está procurando...">
-                        </label>
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% include 'partials/menu.html' %}
-
-    <!-- Receipe Post Search -->
+    <!-- Receipe Post Search
     <div class="receipe-post-search mb-80">
         <div class="container">
             <form action="#" method="post">
@@ -46,14 +28,18 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 
     <!-- Receipe Slider -->
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="receipe-slider owl-carousel">
-                    <img src="{% static 'img/bg-img/tomate_banner.jpg' %}" alt="">
+                    {% if receita.foto_receita == '' %}
+                        <img src="{% static 'img/bg-img/tomate_banner.jpg' %}" alt="">
+                    {% else %}
+                        <img src="{{ receita.foto_receita.url }}" alt="">
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -76,30 +62,28 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Ingredientes -->
-                <div class="col-12 col-lg-4">
-                    <div class="ingredients">
-                        <h4>Ingredientes</h4>
+                <div class="row">
+                    <!-- Ingredientes -->
+                    <div class="col-12 col-lg-4">
                         <div class="ingredients">
-                            <p>{{ receita.ingredientes }} </p>
+                            <h4>Ingredientes</h4>
+                            <div class="ingredients">
+                                <p>{{ receita.ingredientes }} </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="col-12 col-lg-8">
                         <!-- Single Preparation Step -->
+                        <h4>Modo de Preparo</h4>
                         <div class="single-preparation-step d-flex">
                             <p>{{ receita.modo_preparo }} </p>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
     <!-- Ingredientes -->
-    {% include 'partials/footer.html' %}
+    {% include 'partials/_footer.html' %}
 {% endblock %}

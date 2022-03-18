@@ -14,9 +14,24 @@ def index(request):
 
 
 def receita(request, receita_id):
-    receita = get_object_or_404(Receita, pk=receita_id)
+    receitas = get_object_or_404(Receita, pk=receita_id)
 
     receita_a_exibir = {
-        'receita': receita
+        'receita': receitas
     }
     return render(request, 'receita.html', receita_a_exibir)
+
+
+def buscar(request):
+    lista_receitas = Receita.objects.order_by('-data_receita').filter(publicada=True)
+
+    if 'buscar' in request.GET:
+        nome_a_buscar = request.GET['buscar']
+        if nome_a_buscar:
+            lista_receitas = lista_receitas.filter(nome_receita__icontains=nome_a_buscar)
+
+    dados = {
+        'receitas': lista_receitas
+    }
+
+    return render(request, 'buscar.html', dados)

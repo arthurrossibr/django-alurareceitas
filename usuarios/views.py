@@ -1,4 +1,4 @@
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -11,18 +11,24 @@ def cadastro(request):
         email = request.POST['email']
         senha = request.POST['password']
         senha2 = request.POST['password2']
-        if not nome.strip():
+        if campo_vazio(nome):
+            messages.error(request, 'O campo nome não pode ficar em branco')
             return redirect('cadastro')
-        if not email.strip():
+        if campo_vazio(email):
+            messages.error(request, 'O campo email não pode ficar em branco')
             return redirect('cadastro')
-        if not senha != senha2:
+        if senhas_nao_sao_iguais(senha, senha2):
+            messages.error(request, 'As senhas não são iguais')
             return redirect('cadastro')
         if User.objects.filter(email=email).exists():
+            messages.error(request, 'Usuário já cadastrado')
             return redirect('cadastro')
-        user = User.objects.create_user(name=nome, email=email, password=senha)
+        if User.objects.filter(username=nome).exists():
+            messages.error(request, 'Usuário já cadastrado')
+            return redirect('cadastro')
+        user = User.objects.create_user(username=nome, email=email, password=senha)
         user.save()
-        print('Usuário cadastrado com sucesso!')
-
+        messages.success(request, 'Cadastro realizado com sucesso')
         return redirect('login')
     else:
         return render(request, 'usuarios/cadastro.html')
@@ -77,3 +83,11 @@ def cria_receita(request):
         return redirect('dashboard')
     else:
         return render(request, 'usuarios/cria_receita.html')
+
+
+def campo_vazio(campo):
+    return not campo.strip()
+
+
+def senhas_nao_sao_iguais(senha, senha2):
+    return senha != senha2

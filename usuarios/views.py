@@ -38,16 +38,14 @@ def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         senha = request.POST['senha']
-        if campo_vazio(email) or campo_vazio(senha):
-            messages.error(request, 'Os campos email e senha não podem ficar em branco')
+        if email == "" or senha == "":
+            print('Os campos email e senha não podem ficar em branco.')
             return redirect('login')
-        print(email, senha)
         if User.objects.filter(email=email).exists():
             nome = User.objects.filter(email=email).values_list('username', flat=True).get()
-            user = auth.authenticate(request, username=nome, password=senha)
+            user = auth.authenticate(request, password=senha, username=nome)
             if user is not None:
                 auth.login(request, user)
-                print('Login realizado com sucesso')
                 return redirect('dashboard')
     return render(request, 'usuarios/login.html')
 
@@ -85,12 +83,6 @@ def cria_receita(request):
         return redirect('dashboard')
     else:
         return render(request, 'usuarios/cria_receita.html')
-
-
-def deleta_receita(request, receita_id):
-    receita = get_object_or_404(Receita, pk=receita_id)
-    receita.delete()
-    return redirect('dashboard')
 
 
 def campo_vazio(campo):

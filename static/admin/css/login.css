@@ -1,8 +1,7 @@
 /* LOGIN FORM */
 
-.login {
+body.login {
     background: #f8f8f8;
-    height: auto;
 }
 
 .login #header {
@@ -31,7 +30,6 @@
     width: 28em;
     min-width: 300px;
     margin: 100px auto;
-    height: auto;
 }
 
 .login #content-main {
@@ -57,6 +55,8 @@
     clear: both;
     padding: 8px;
     width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 

@@ -8,6 +8,7 @@
     </div>
 
     {% include 'partials/_busca.html' %}
+
     {% include 'partials/_menu.html' %}
 
     <!-- Receipe Post Search
@@ -16,11 +17,11 @@
             <form action="#" method="post">
                 <div class="row">
                     <div class="col-12 col-lg-5">
-                        <label for="select1"></label><select name="select1" id="select1">
-                        <option value="1">Comida típica brasileira</option>
-                        <option value="1">Massas</option>
-                        <option value="1">Veganas</option>
-                    </select>
+                        <select name="select1" id="select1">
+                            <option value="1">Comida típica brasileira</option>
+                            <option value="1">Massas</option>
+                            <option value="1">Veganas</option>
+                        </select>
                     </div>
                     <div class="col-12 col-lg-2 text-right">
                         <button type="submit" class="btn delicious-btn">Buscar</button>
@@ -36,7 +37,7 @@
             <div class="col-12">
                 <div class="receipe-slider owl-carousel">
                     {% if receita.foto_receita == '' %}
-                        <img src="{% static 'img/bg-img/tomate_banner.jpg' %}" alt="">
+                        <img src="{% static 'img/bg-img/tomate_banner.jpg' %}">
                     {% else %}
                         <img src="{{ receita.foto_receita.url }}" alt="">
                     {% endif %}
@@ -55,35 +56,34 @@
                         <span>{{ receita.data_receita }}</span>
                         <h2>{{ receita.nome_receita }}</h2>
                         <div class="receipe-duration">
-                            <h6>Preparo: {{ receita.tempo_de_preparo }} minutos</h6>
+                            <h6>Preparo: {{ receita.tempo_preparo }} minutos</h6>
                             <h6>Rendimento: {{ receita.rendimento }}</h6>
                             <h6>Categoria: {{ receita.categoria }}</h6>
                             <h6>Por: {{ receita.pessoa }}</h6>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <!-- Single Preparation Step -->
+                        <div class="single-preparation-step d-flex">
+                            <p>{{ receita.modo_preparo }}</p>
+                        </div>
+                    </div>
+
                     <!-- Ingredientes -->
                     <div class="col-12 col-lg-4">
                         <div class="ingredients">
                             <h4>Ingredientes</h4>
                             <div class="ingredients">
-                                <p>{{ receita.ingredientes }} </p>
+                                <p>{{ receita.ingredientes }}</p>
+                                </p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-12 col-lg-8">
-                        <!-- Single Preparation Step -->
-                        <h4>Modo de Preparo</h4>
-                        <div class="single-preparation-step d-flex">
-                            <p>{{ receita.modo_preparo }} </p>
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ingredientes -->
-    {% include 'partials/_footer.html' %}
+                <!-- Ingredientes -->
+
+                {% include 'partials/_footer.html' %}
 {% endblock %}
